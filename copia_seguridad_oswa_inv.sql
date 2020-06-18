@@ -65,7 +65,7 @@ CREATE TABLE `detalle` (
   `prestadas` int(11) unsigned NOT NULL DEFAULT 0,
   `devueltas` int(11) DEFAULT 0,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -74,7 +74,7 @@ CREATE TABLE `detalle` (
 
 LOCK TABLES `detalle` WRITE;
 /*!40000 ALTER TABLE `detalle` DISABLE KEYS */;
-INSERT INTO `detalle` VALUES (29,0,0,'2020-06-17',65,'p',2,0),(30,0,0,'2020-06-17',8,'p',1,0),(31,0,0,'2020-06-17',12,'p',1,0),(32,0,0,'2020-06-17',62,'p',1,0);
+INSERT INTO `detalle` VALUES (1,1,46,'2020-06-18',6,'p',1,0);
 /*!40000 ALTER TABLE `detalle` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -91,7 +91,7 @@ CREATE TABLE `error` (
   `error_1` varchar(300) DEFAULT NULL,
   `error_2` varchar(300) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=73 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=74 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -100,7 +100,7 @@ CREATE TABLE `error` (
 
 LOCK TABLES `error` WRITE;
 /*!40000 ALTER TABLE `error` DISABLE KEYS */;
-INSERT INTO `error` VALUES (69,NULL,'',''),(70,NULL,'.',''),(71,NULL,'INSERT INTO detalle ( idherramienta, prestadas ) V','SQLSTATE[HY000]: General error'),(72,NULL,'INSERT INTO detalle ( idherramienta, prestadas ) VALUES ( :idherramienta, :prestadas )','SQLSTATE[HY000]: General error');
+INSERT INTO `error` VALUES (69,NULL,'',''),(70,NULL,'.',''),(71,NULL,'INSERT INTO detalle ( idherramienta, prestadas ) V','SQLSTATE[HY000]: General error'),(72,NULL,'INSERT INTO detalle ( idherramienta, prestadas ) VALUES ( :idherramienta, :prestadas )','SQLSTATE[HY000]: General error'),(73,NULL,'INSERT INTO detalle ( idherramienta, prestadas ) VALUES ( :idherramienta, :prestadas )','SQLSTATE[HY000]: General error');
 /*!40000 ALTER TABLE `error` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -217,7 +217,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Admin Users','admin','d033e22ae348aeb5660fc2140aec35850c4da997',1,'pzg9wa7o1.jpg',1,'2020-06-17 16:59:02'),(2,'Special User','special','ba36b97a41e7faf742ab09bf88405ac04f99599a',2,'no_image.jpg',1,'2017-06-16 07:11:26'),(3,'Default User','user','12dea96fec20593566ab75692c9949596833adc9',3,'no_image.jpg',1,'2019-11-08 16:21:24');
+INSERT INTO `users` VALUES (1,'Admin Users','admin','d033e22ae348aeb5660fc2140aec35850c4da997',1,'pzg9wa7o1.jpg',1,'2020-06-18 15:24:31'),(2,'Special User','special','ba36b97a41e7faf742ab09bf88405ac04f99599a',2,'no_image.jpg',1,'2017-06-16 07:11:26'),(3,'Default User','user','12dea96fec20593566ab75692c9949596833adc9',3,'no_image.jpg',1,'2019-11-08 16:21:24');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -230,4 +230,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-06-18  8:04:13
+-- Dump completed on 2020-06-18 15:42:06
