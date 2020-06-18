@@ -1,7 +1,6 @@
 $(document).ready(function(){
 	$('#add_button').click(function(){
 		$('#div_problema').html('<input type="hidden" name="problema" id="problema" />');
-		
 		$('#user_form')[0].reset();
 		$('.modal-title').text("Agregar Herramienta");
 		$('#action').val("Agregar");

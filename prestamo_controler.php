@@ -11,6 +11,7 @@ $operation = (isset($_POST["operation"])) ? $_POST["operation"] : '0';
 $user_id = (isset($_POST["user_id"])) ? $_POST["user_id"] : '0';
 $idherramienta = (isset($_POST["idherramienta"])) ? $_POST["idherramienta"] : '0';
 $prestadas  = (isset($_POST["prestadas"])) ? $_POST["prestadas"] : '0';
+$idProfesor = (isset($_POST["idprofesor"])) ? $_POST["idprofesor"] : '0';
 
 
 $output = array();
@@ -28,7 +29,7 @@ switch ($opcion) {
 		echo json_encode($output);
 		break;
     case 3:
-		PrestamoAdd( $idherramienta, $prestadas );
+		PrestamoGrabar ( $idProfesor );    
 		$json['msj'] = 'Ok';
 		$json['success'] = true;		
 		echo json_encode($json);		
@@ -69,7 +70,12 @@ switch ($opcion) {
 			echo '</tr>';
 		}
 		break ;
-
+    case 7:
+		PrestamoAdd( $idherramienta, $prestadas );
+		$json['msj'] = 'Ok';
+		$json['success'] = true;		
+		echo json_encode($json);		
+		break;
 }
 
 ?>

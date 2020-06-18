@@ -87,3 +87,31 @@ Function PrestamoAdd ( $idherramienta, $prestadas )
 */	
 }
 
+Function PrestamoUltPedido ()
+{
+	global $connection ;
+	$idpedido = 0 ;
+	$query = "SELECT MAX(idpedido) AS ultimo FROM detalle" ;
+	$statement = $connection->prepare( $query );
+	$statement->execute();
+	$all_result = $statement->fetchAll();
+	foreach ($all_result as $result){
+		$idpedido = (int)trim($result['ultimo']);	
+	}
+	$idpedido = $idpedido + 1 ;
+	return $idpedido ;
+}
+
+Function PrestamoGrabar( $idprofesor )
+{
+	global $connection ;
+	$query  = "UPDATE detalle SET idpedido = :idpedido , idprofesor = :idprofesor ";
+	$query .= " WHERE idpedido = '0' ";
+	$idpedido = PrestamoUltPedido() ;
+	$adatos = array( ':idpedido' => $idpedido , ':idprofesor' => $idprofesor );
+	$statement = $connection->prepare( $query );
+	$statement->execute( $adatos );
+	$result = $statement->fetchAll();	    
+	return $result ;
+}
+

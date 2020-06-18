@@ -1,9 +1,10 @@
 $(document).ready(function(){
 		$('#add_button').click(function(){
 			var idpedido = 0 ;
-			$.post("prestamo_controler.php?opcion=6", {}, function(data){
-				$("#detalle-producto2").html(data);
-			});			
+			var cantidad = 1 ;			
+//			$.post("prestamo_controler.php?opcion=6", {}, function(data){
+//				$("#detalle-producto2").html(data);
+//			});			
 			
 			$.post("prestamo_controler.php?opcion=4", {}, function(data){
 				$("#cbx_profesor").html(data);
@@ -18,7 +19,7 @@ $(document).ready(function(){
 			$('#action').val("Agregar");
 			$('#operation').val("add");
 			$('#idpedido').val(idpedido);
-			$('#txt_cantidad').val(idpedido);
+			$('#txt_cantidad').val(cantidad);
 			$("#detalle-producto2").html("");
 
 		});
@@ -37,21 +38,52 @@ $(document).ready(function(){
 		event.preventDefault();
 		var idherramienta = $('#cbx_herramienta').val();
 		var prestadas = $('#txt_cantidad').val();
-		console.log("prueba");
 		$.ajax({
-			$.post("prestamo_controler.php?opcion=3", 
-				{ idherramienta:idherramienta, prestadas:prestadas }, function(data){
+			url: 'prestamo_controler.php?opcion=7',
+			type: 'post',
+			data: { 'idherramienta' :idherramienta, 'prestadas' :prestadas },
+			dataType: 'json',
+			success: function(data) {
+				if(data.success==true){
+					alertify.success(data.msj);
 					$.post("prestamo_controler.php?opcion=6",
 						{}, function(data){
 							$("#detalle-producto2").html(data);
 					});						
-			});						
-		});
+					var cantidad = 1 ;			
+					$('#txt_cantidad').val(cantidad);
+				}else{
+					alertify.error(data.msj);
+				}
+			},
+			error: function(jqXHR, textStatus, error) {
+				alertify.error(error);
+			}
+		});			
 
 	});
+
+	
 	$(document).on('submit', '#user_form', function(event){
 		event.preventDefault();
-		alert( "yo1" );
+		var idprofesor = $('#cbx_profesor').val();
+		$.ajax({
+			url: 'prestamo_controler.php?opcion=3',
+			type: 'post',
+			data: { 'idprofesor' :idprofesor},
+			dataType: 'json',
+			success: function(data) {
+				if(data.success==true){
+					alertify.success(data.msj);
+				}else{
+					alertify.error(data.msj);
+				}
+			},
+			error: function(jqXHR, textStatus, error) {
+				alertify.error(error);
+			}
+		});			
+
 	});	
 	
 	

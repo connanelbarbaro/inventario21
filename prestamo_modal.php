@@ -33,10 +33,9 @@
 							</div>
 							<div class="col-md-2">
 								<div style="margin-top: 19px;">
-									<button type="button" class="btn btn-success btn-agregar-producto" id= "btn-agregar-producto" name ="btn-agregar-producto">Agregar</button>
+									<button type="button" class="btn btn-info btn-agregar-producto" id= "btn-agregar-producto" name ="btn-agregar-producto">Agregar</button>
 								</div>
 							</div>
-
 						</div>
 						<br>
 						<div class="panel panel-info">
