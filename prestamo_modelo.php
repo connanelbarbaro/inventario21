@@ -8,25 +8,11 @@ Function PrestamoListar()
 	$sql .=", SUM( d.prestadas)-SUM( d.devueltas) as totalpendientes, ifnull(SUM( d.prestadas),0) as totalprestadas " ;
 	$sql .=" FROM detalle d";
 	$sql .=" LEFT JOIN categorias c1 ON c1.id = d.idprofesor";
-	$sql .=" WHERE d.idestado = 'P'" ;
+	$sql .=" WHERE d.idestado = 'P' " ;
 	$sql .=" GROUP BY d.idpedido " ;
 	$sql .=" ORDER BY d.id ASC";
-	try {
-	    $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$statement = $connection->prepare( $sql );
-		$statement->execute();
-		$result = $statement->fetchAll();
-		return $result ;
-	} catch (PDOException $e) {
-		echo "<p>";
-		echo "Error en esta consulta :";
-		echo $sql;
-		echo "</p>";
-		echo "<p>";
-		echo "Fallo la conexion: " . $e->getMessage() ;
-		echo "</p>";
-		die();
-	}
+	$result = errorsql( $sql );
+	return $result ;
 }
 
 Function PrestamoDetalle( $idpedido = "0" )
@@ -39,62 +25,25 @@ Function PrestamoDetalle( $idpedido = "0" )
 	$sql .=" WHERE d.idpedido = :idpedido " ;
 	$sql .=" ORDER BY d.id ASC";
 	$adatos = array( ':idpedido' => $idpedido );
-	try {
-	    $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$statement = $connection->prepare( $sql );
-		$statement->execute( $adatos );
-		$result = $statement->fetchAll();
-		return $result ;
-	} catch (PDOException $e) {
-		echo "<p>";
-		echo "Error en esta consulta :";
-		echo $sql;
-		echo "</p>";
-		echo "<p>";
-		echo "Fallo la conexion: " . $e->getMessage() ;
-		echo "</p>";
-		die();
-	}
+	$result = errorsql( $sql, $adatos );
+	return $result ;	
 }
 
 Function PrestamoAdd ( $idherramienta, $prestadas )
 {
 	global $connection ;
-	$query  = "INSERT INTO detalle ( idherramienta, prestadas )";
-	$query .= " VALUES ( :idherramienta, :prestadas )";
+	$sql  = "INSERT INTO detalle ( idherramienta, prestadas ) VALUES ( :idherramienta, :prestadas )";
 	$adatos = array( ':idherramienta' => $idherramienta, ':prestadas' => $prestadas );
-	$statement = $connection->prepare( $query );
-	$statement->execute( $adatos );
-	$result = $statement->fetchAll();	    
+	$result = errorsql( $sql, $adatos );
 	return $result ;
-/*
-	try {
-	    $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$statement = $connection->prepare( $query );
-		$statement->execute( $adatos );
-		$result = $statement->fetchAll();	    
-		return $result ;
-	} catch (PDOException $e) {
-		echo "<p>";
-		echo "Error en esta consulta :";
-		echo $query;
-		echo "</p>";
-		echo "<p>";
-		echo "Fallo la conexion: " . $e->getMessage() ;
-		echo "</p>";
-		die();
-	}	
-*/	
 }
 
 Function PrestamoUltPedido ()
 {
 	global $connection ;
 	$idpedido = 0 ;
-	$query = "SELECT MAX(idpedido) AS ultimo FROM detalle" ;
-	$statement = $connection->prepare( $query );
-	$statement->execute();
-	$all_result = $statement->fetchAll();
+	$sql = "SELECT MAX(idpedido) AS ultimo FROM detalle" ;
+	$all_result = errorsql( $sql );
 	foreach ($all_result as $result){
 		$idpedido = (int)trim($result['ultimo']);	
 	}
@@ -104,14 +53,21 @@ Function PrestamoUltPedido ()
 
 Function PrestamoGrabar( $idprofesor )
 {
-	global $connection ;
-	$query  = "UPDATE detalle SET idpedido = :idpedido , idprofesor = :idprofesor ";
-	$query .= " WHERE idpedido = '0' ";
+
+	$sql  = "UPDATE detalle SET idpedido = :idpedido , idprofesor = :idprofesor ";
+	$sql .= " WHERE idpedido = '0' ";
 	$idpedido = PrestamoUltPedido() ;
 	$adatos = array( ':idpedido' => $idpedido , ':idprofesor' => $idprofesor );
-	$statement = $connection->prepare( $query );
-	$statement->execute( $adatos );
-	$result = $statement->fetchAll();	    
-	return $result ;
+	return errorsql( $sql, $adatos );
 }
 
+
+Function PrestamoDel ( $idpedido )
+{
+	global $connection ;
+	$sql = "DELETE FROM detalle WHERE idpedido = :idpedido ";
+	$adatos = array( ':idpedido' => $idpedido );
+	$result = errorsql( $sql, $adatos );
+	return $result ;
+	
+}

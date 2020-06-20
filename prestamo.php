@@ -19,9 +19,19 @@ $_SESSION['detalle'] = array();
 							</div>
 						</strong>
 					</div>
-					<div class="panel-body detalle-producto">
-					<?php include_once('prestamo_list.php'); ?>
-
+					<div class="panel-body">
+						<table class="table table-bordered table-striped table-hover" id="myTable">
+							<thead>
+							    <tr>
+								   <th style="width: 50%;"> Profesor </th>
+								   <th style="width: 5%;"> Prestadas </th>
+								   <th style="width: 5%;"> Pendientes </th>                            
+								   <th class="text-center" style="width: 10%;"> Acciones </th>
+							    </tr>
+							</thead>
+							<tbody id="detalle-producto1" name="detalle-producto1" >
+							</tbody>
+						</table>					
 					</div>
 				</div>
 			</div>
@@ -32,4 +42,7 @@ $_SESSION['detalle'] = array();
 <?php include_once('prestamo_modal.php'); ?>
 </body>
 </html>
+<?php include_once('layouts/js.php'); ?>
+<script type="text/javascript" src="prestamo.js"></script>
+
 

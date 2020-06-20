@@ -1,5 +1,8 @@
 <?php
  $errors = array();
+ require_once('includes/load.php');
+
+
 
  /*--------------------------------------------------------------*/
  /* Function for Remove escapes special
@@ -200,22 +203,42 @@ function Boton_edicion( $id )
 	$boton .= '</div>';
 	return $boton ;
 }
-function GuardarError($error1 ="1", $error2 ="2")
+
+function errorsql( $sql ="", $datos ="" )
 {
 	global $connection ;
-	$query  = "INSERT INTO error ( error_1, error_2 )";
-	$query .= " VALUES ( '$error1' , '$error2' )";
-	$adatos = array( ':error_1' => $error1, ':error_2' => $error2 );
-	try {
-	    $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$statement = $connection->prepare( $query );
-		$statement->execute();
-		$result = $statement->fetchAll();	 
-		die( "Grabado") ;
-	} catch (PDOException $e) {
-		echo "Error en esta consulta :<pre> " . $query ."</pre>";
-	     echo "Falló la conexión: " . $e->getMessage() ;
-		DIE( "error" );
+	$lSelect =stristr($sql, 'SELECT');
+	$result = False ;
+	
 
+	if ( empty( $sql ) )
+	{
+	     $a .= "Consulta Vacia" ;
+	     ECHO $a ;
+		DIE( $a );
+		return $result ;
+	}
+	try {
+		$connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$statement = $connection->prepare( $sql );
+		if ( is_array( $datos ) )
+		{
+			$statement->execute( $datos );
+		} else {
+			$result = $statement->execute();			
+		}
+		IF( $lSelect )
+		{
+			$result = $statement->fetchAll();	 
+		}
+		return $result ;
+
+	} catch (PDOException $e) {
+		$a = "Error en esta consulta :<pre> " . $sql."</pre>";
+	     $a .= "Falló la conexión: " . $e->getMessage() ;
+	     ECHO $a ;
+		DIE( $a );
+		return $result ;		
 	}	
+
 }
