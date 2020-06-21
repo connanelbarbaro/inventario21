@@ -63,6 +63,7 @@ $(document).ready(function(){
 					{ idpedido :idpedido, opcion:opcion }, function(data){
 						$("#detalle-producto2").html(data);
 				});						
+				$('#idpedido').val(idpedido);
 				$('#userModal').modal('show');
 				$('.modal-title').text("Editar");
 				$('#action').val("Actualizar");
@@ -78,15 +79,15 @@ $(document).ready(function(){
 // 1 herramienta
 		event.preventDefault();
 		var idherramienta = $('#cbx_herramienta').val();
+		var idpedido = $('#idpedido').val();
 		var prestadas = $('#txt_cantidad').val();
 		var opcion = 1 ;
 		$.ajax({
 			url: 'prestamo_edit.php',
 			type: 'post',
-			data: { idherramienta:idherramienta, prestadas:prestadas, opcion:opcion },
+			data: { idherramienta:idherramienta, prestadas:prestadas, opcion:opcion, idpedido:idpedido },
 			dataType: 'json',
 			success: function(data) {
-				var idpedido = $('#idpedido').val();
 				var opcion = 6 ;					
 				alertify.success(data.msj );				
 				$.post("prestamo_controler.php",

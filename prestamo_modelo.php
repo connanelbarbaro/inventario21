@@ -30,11 +30,12 @@ Function PrestamoDetalle( $idpedido = "0" )
 	return $result ;	
 }
 
-Function Prestamo_Add ( $idherramienta, $prestadas )
+Function Prestamo_Add ( $idpedido, $idherramienta, $prestadas )
 {
 	global $connection ;
-	$sql  = "INSERT INTO detalle ( idherramienta, prestadas ) VALUES ( :idherramienta, :prestadas )";
-	$adatos = array( ':idherramienta' => $idherramienta, ':prestadas' => $prestadas );
+	$sql  = "INSERT INTO detalle ( idpedido, idherramienta, prestadas ) ";
+	$sql  .= " VALUES ( :idpedido, :idherramienta, :prestadas )";
+	$adatos = array( ':idpedido' => $idpedido, ':idherramienta' => $idherramienta, ':prestadas' => $prestadas );
 	$result = errorsql( $sql, $adatos );
 	return $result ;
 }

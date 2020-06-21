@@ -40,7 +40,7 @@
 						<br>
 						<div class="panel panel-info">
 							<div class="panel-body" >
-								<table class="table table-bordered table-striped table-hover" id="myTable3">
+								<table class="table table-bordered table-striped table-hover" id="detalle">
 									<thead>
 									    <tr>
 										   <th style="width: 50%;"> Herramienta </th>
@@ -87,6 +87,7 @@ $(document).ready(function(){
 		$("#cbx_herramienta").html(data);
 	});
 	
+
 
 } );
 
