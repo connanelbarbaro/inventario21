@@ -91,3 +91,19 @@ Function PrestamoProfesor( $idpedido = "0" )
 	$result = errorsql( $sql, $adatos );
 	return $result ;	
 }
+
+Function PrestamoPendientes()
+{
+	global $connection ;
+	$sql  ="SELECT d.idherramienta , h1.name as herramienta, ";
+	$sql .=" ifnull(SUM( d.prestadas),0) as totalprestadas , ifnull(SUM( d.prestadas)-SUM( d.devueltas),0) as totalpendientes";
+	$sql .=" FROM detalle d";
+	$sql .=" LEFT JOIN herramientas h1 ON h1.id = d.idherramienta";
+	$sql .=" WHERE d.idestado = 'P' " ;
+	$sql .=" GROUP BY d.idherramienta " ;
+	$sql .=" ORDER BY herramienta ASC ";
+
+
+	$result = errorsql( $sql, $adatos );
+	return $result ;	
+}

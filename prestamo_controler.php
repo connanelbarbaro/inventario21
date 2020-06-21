@@ -88,7 +88,7 @@ switch ($opcion) {
 		{
 			echo '<tr>' ;
 			echo '<td class="text-left">'.$detalle['herramienta']. '</td>';
-			echo '<td class="text-left">'.$detalle['prestadas']. '</td>';
+			echo '<td class="text-right">'.$detalle['prestadas']. '</td>';
 			echo '<td class="text-left"></td>';			
 			echo '<td class="text-center">';
 			echo '<div class="btn-group">';
