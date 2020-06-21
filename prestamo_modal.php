@@ -40,7 +40,7 @@
 						<br>
 						<div class="panel panel-info">
 							<div class="panel-body" >
-								<table class="table table-bordered table-striped table-hover" id="myTable">
+								<table class="table table-bordered table-striped table-hover" id="myTable3">
 									<thead>
 									    <tr>
 										   <th style="width: 50%;"> Herramienta </th>
@@ -68,3 +68,26 @@
 		</form>
 	</div>
 </div>
+
+<script type="text/javascript">
+
+
+
+$(document).ready(function(){
+
+// CARGA PROFESORES EN MODAL	
+	var opcion = 4 ;
+	$.post("prestamo_controler.php", {opcion:opcion }, function(data){
+		$("#cbx_profesor").html(data);
+	});
+
+// CARGA HERRAMIENTAS EN MODAL	
+	var opcion = 5 ;
+	$.post("prestamo_controler.php", {opcion:opcion }, function(data){
+		$("#cbx_herramienta").html(data);
+	});
+	
+
+} );
+
+</script>

@@ -1,25 +1,4 @@
 $(document).ready(function(){
-
-	var msg = alertify.success('Cargando Pedidos', 0);
-// { name: "John", time: "2pm" }							
-// CARGDA DATOS PRESTAMOS
-	var opcion = 8 ;
-	$.post("prestamo_controler.php", {opcion:opcion }, function(data){
-		$("#detalle-producto1").html(data);
-    		msg.dismiss();		
-	});			
-
-// CARGA PROFESORES EN MODAL	
-	var opcion = 4 ;
-	$.post("prestamo_controler.php", {opcion:opcion }, function(data){
-		$("#cbx_profesor").html(data);
-	});
-
-// CARGA HERRAMIENTAS EN MODAL	
-	var opcion = 5 ;
-	$.post("prestamo_controler.php", {opcion:opcion }, function(data){
-		$("#cbx_herramienta").html(data);
-	});
 	
 // DATATABLE
 	var dataTable = $('#myTable').DataTable({
@@ -36,7 +15,7 @@ $(document).ready(function(){
 	$('#add_button').click(function(){
 		var idpedido = 0 ;
 		var cantidad = 1 ;			
-		var opcion = 6
+		var opcion = 6 ;
 		$('#user_form')[0].reset();
 		$('.modal-title').text("Agregar Pedido");
 		$('#action').val("Guardar Pedido");
@@ -52,53 +31,70 @@ $(document).ready(function(){
 // MODAL BORRAR PEDIDO
 	$(document).on('click', '.delete', function(){
 		var idpedido = $(this).attr("id");
-		var operation = "del" ;
-		var opcion = 9 ;
-		alert( idpedido );
 		$.ajax({
-			url:"prestamo_controler.php",
+			url:"prestamo_del.php",
 			method:"POST",
-			data:{ idpedido:idpedido, opcion:opcion },
+			data:{ idpedido:idpedido },
 			dataType:"json",
 			success:function(data)
 			{
-				var opcion = 8 ;
-				$.post("prestamo_controler.php", { opcion:opcion }, function(data){
-					$("#detalle-producto1").html(data);
-				});			
+				var msg = alertify.success(data.msj, 0);				
+				$(".detalle-producto1").load('prestamo_list.php');
+				msg.dismiss();		
 			}
 		})
 	});
 
 // MODAL ACTUALIZAR	
 	$(document).on('click', '.update', function(){
+		var idpedido = $(this).attr("id");
+		var opcion = 4 ;
+		var msg = alertify.success( "Cargando", 0 );				
+		$.ajax({
+			url:"prestamo_edit.php",
+			method:"POST",
+			data:{idpedido:idpedido , opcion:opcion },
+			dataType:"json",
+			success:function(data)
+			{
+				var opcion = 6 ;
+				$('#cbx_profesor').val(data.idprofesor);
+				$.post("prestamo_controler.php",
+					{ idpedido :idpedido, opcion:opcion }, function(data){
+						$("#detalle-producto2").html(data);
+				});						
+				$('#userModal').modal('show');
+				$('.modal-title').text("Editar");
+				$('#action').val("Actualizar");
+				$('#operation').val("edit");
+			}
+		})
+		msg.dismiss();		
 	});
-
-
 
 
 // AGREGAR HERRAMIENTA
 	$(document).on('click', '#btn-agregar-producto', function(event){
+// 1 herramienta
 		event.preventDefault();
 		var idherramienta = $('#cbx_herramienta').val();
 		var prestadas = $('#txt_cantidad').val();
-		var opcion = 7 ;
-		var msg = alertify.success('Guardando Herramienta', 0);
+		var opcion = 1 ;
 		$.ajax({
-			url: 'prestamo_controler.php',
+			url: 'prestamo_edit.php',
 			type: 'post',
 			data: { idherramienta:idherramienta, prestadas:prestadas, opcion:opcion },
 			dataType: 'json',
 			success: function(data) {
-					var idpedido = $('#idpedido').val();
-					var opcion = 6 ;					
-					$.post("prestamo_controler.php",
-						{ idpedido:idpedido, opcion:opcion }, function(data){
-							$("#detalle-producto2").html(data);
-    							msg.dismiss();
-					});						
-					var cantidad = 1 ;			
-					$('#txt_cantidad').val(cantidad);
+				var idpedido = $('#idpedido').val();
+				var opcion = 6 ;					
+				alertify.success(data.msj );				
+				$.post("prestamo_controler.php",
+					{ idpedido:idpedido, opcion:opcion }, function(data){
+					$("#detalle-producto2").html(data);
+				});						
+				var cantidad = 1 ;			
+				$('#txt_cantidad').val(cantidad);
 			},
 			error: function(jqXHR, textStatus, error) {
 				alertify.error(" ERROR AGREGAR HERRAMIENTA");
@@ -107,35 +103,60 @@ $(document).ready(function(){
 
 	});
 
+// BORRAR HERRAMNIENTA
+	$(document).on('click', '.btn-borrar-producto', function(event){
+		var id = $(this).attr("id");
+		var opcion = 3 ;	
+		$.ajax({
+			url: 'prestamo_edit.php',
+			type: 'post',
+			data: { id:id , opcion:opcion  },
+			dataType: 'json',
+			success: function(data) {
+				var idpedido = $('#idpedido').val();
+				var opcion = 6 ;					
+				alertify.success(data.msj);				
+				$.post("prestamo_controler.php",
+					{ idpedido:idpedido, opcion:opcion }, function(data){
+					$("#detalle-producto2").html(data);
+				});						
+			},
+			error: function(req, status, err ) {
+                    console.log( 'something went wrong', status, err );
+                    alert('something went wrong'+ status + err); 
+			}
+		});
+	});
+
+
 // GUARDAR PEDIDO	
 	$(document).on('submit', '#user_form', function(event){
+// 2 pedido
 		event.preventDefault();
 		var idprofesor = $('#cbx_profesor').val();
-		var operation = $('#operation').val();		
+		var operation = "add" ;		
 		if (idprofesor =="0"){
 			alertify.error("Debes seleccionar un cliente");
 			$("#cbx_profesor").focus();
 			return false;
 		}
-		var opcion = 3 ;	
+		var opcion = 2 ;	
 		$.ajax({
-			
-			url: 'prestamo_controler.php',
+			url: 'prestamo_edit.php',
 			type: 'post',
-			data: { idprofesor:idprofesor , opcion:opcion , operation:operation },
+			data: { idprofesor:idprofesor , opcion:opcion  },
 			dataType: 'json',
 			success: function(data) {
-				alertify.success(data.msj);
+				// CARGAR PEDIDOS
+				var msg = alertify.success('Cargando Pedidos', 0);
+				$(".detalle-producto1").load('prestamo_list.php');
+				msg.dismiss();		
 				$('#user_form')[0].reset();
 				$('#userModal').modal('hide');
-				alertify.success(data.msj);
-				var opcion = 8 ;
-				$.post("prestamo_controler.php", { opcion:opcion }, function(data){
-					$("#detalle-producto1").html(data);
-				});			
 			},
-			error: function(jqXHR, textStatus, error) {
-				alertify.error(error);
+			error: function(req, status, err ) {
+                    console.log( 'something went wrong', status, err );
+                    alert('something went wrong'+ status + err); 
 			}
 		});			
 

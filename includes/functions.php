@@ -209,7 +209,6 @@ function errorsql( $sql ="", $datos ="" )
 	global $connection ;
 	$lSelect =stristr($sql, 'SELECT');
 	$result = False ;
-	
 
 	if ( empty( $sql ) )
 	{
@@ -223,7 +222,7 @@ function errorsql( $sql ="", $datos ="" )
 		$statement = $connection->prepare( $sql );
 		if ( is_array( $datos ) )
 		{
-			$statement->execute( $datos );
+			$result = $statement->execute( $datos );
 		} else {
 			$result = $statement->execute();			
 		}

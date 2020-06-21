@@ -16,6 +16,30 @@ $output = array();
 $json['msj'] = 'Error';
 $json['success'] = false;
 switch ($opcion) {
+	case 1:
+// LSTAR HERRAMIENTAS PRESTADAS				
+		$all_prestamos = PrestamoListar();
+		foreach ($all_prestamos as $prestamo)
+		{
+			echo '<tr>';
+			echo '<td class="text-left">'.$prestamo['profesor'].'</td>';
+			echo '<td class="text-right">'.$prestamo['totalprestadas'].'</td>';
+			echo '<td class="text-right">'.$prestamo['totalpendientes'].'</td>';
+			echo '<td class="text-center">';
+			echo '<div class="btn-group">';
+			echo '<button type="button" name="update" id="'.(int)$prestamo['idpedido'].'" class="btn btn-info btn-sm update" title="Editar">E</button>';
+			echo '</div>';
+			echo '<div class="btn-group">';
+			echo '<button type="button" name="reparacion" id="'.(int)$prestamo['idpedido'].'" class="btn btn-warning btn-sm reparacion" title="Reparacion">R</button>';
+			echo '</div>';
+			echo '<div class="btn-group">';
+			echo '<button type="button" name="delete" id="'.(int)$prestamo['idpedido'].'" class="btn btn-danger btn-sm delete" title="Borrar">B</button>';
+			echo '</div>';
+			echo '</td>';
+			echo '</tr>';
+		}
+		break ;
+
 	case 2:
 		$result = CategoriaID ( $user_id );
 		foreach($result as $row)
@@ -29,14 +53,12 @@ switch ($opcion) {
     case 3:
  		switch ($operation) {
 			case "add":
-				$json['success'] = PrestamoGrabar( $idProfesor );    
-				$json['msj'] = ( $json['success'] ) ? "Herramienta Agregada" : 'Error Al Grabar';
-				echo json_encode($json);
+				PrestamoGrabar( $idProfesor );    
 				break;	
-				case "edit":
+			case "edit":
+				break;					
 			case "del":
-				PrestamoDel ( $idPedido );    
-			case "rep":
+				break;							
 		}
 		echo json_encode($json);
 		break;	
@@ -70,48 +92,22 @@ switch ($opcion) {
 			echo '<td class="text-left"></td>';			
 			echo '<td class="text-center">';
 			echo '<div class="btn-group">';
-			echo '<button type="button" name="delete" id="'.$detalle['id'].'" class="btn btn-danger btn-sm delete" title="Borrar">B</button>';
+			echo '<button type="button" name="btn-borrar-producto" id="'.$detalle['id'].'" class="btn btn-danger btn-sm btn-borrar-producto" title="Borrar">B</button>';
 			echo '</div>';
 			echo '</td>';
 			echo '</tr>';
 		}
 		break ;
+
     case 7:
 // AGREGAR HERRAMIENTAS DETALLE    
 		PrestamoAdd( $idherramienta, $prestadas );
-		$json['msj'] = 'Ok';
-		$json['success'] = true;
 		echo json_encode($json);
 		break;
     case 8:		
-// LSTAR HERRAMIENTAS PRESTADAS				
-		$all_prestamos = PrestamoListar();
-		foreach ($all_prestamos as $prestamo)
-		{
-			echo '<tr>';
-			echo '<td class="text-left">'.$prestamo['profesor'].'</td>';
-			echo '<td class="text-right">'.$prestamo['totalprestadas'].'</td>';
-			echo '<td class="text-right">'.$prestamo['totalpendientes'].'</td>';
-			echo '<td class="text-center">';
-			echo '<div class="btn-group">';
-			echo '<button type="button" name="update" id="'.(int)$prestamo['idpedido'].'" class="btn btn-info btn-sm update" title="Editar">E</button>';
-			echo '</div>';
-			echo '<div class="btn-group">';
-			echo '<button type="button" name="reparacion" id="'.(int)$prestamo['idpedido'].'" class="btn btn-warning btn-sm reparacion" title="Reparacion">R</button>';
-			echo '</div>';
-			echo '<div class="btn-group">';
-			echo '<button type="button" name="delete" id="'.(int)$prestamo['idpedido'].'" class="btn btn-danger btn-sm delete" title="Borrar">B</button>';
-			echo '</div>';
-			echo '</td>';
-			echo '</tr>';
-		}
-		break ;
     case 9:
 // BORRAR PEDIDO
 		PrestamoDel( $idpedido);
-		$json['msj'] = 'Ok';
-		$json['success'] = true;
-		echo json_encode($json);
 		break;
 		
 }

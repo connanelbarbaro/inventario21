@@ -23,13 +23,14 @@ Function PrestamoDetalle( $idpedido = "0" )
 	$sql .=" LEFT JOIN categorias c1 ON c1.id = d.idprofesor";
 	$sql .=" LEFT JOIN herramientas h1 ON h1.id = d.idherramienta";
 	$sql .=" WHERE d.idpedido = :idpedido " ;
-	$sql .=" ORDER BY d.id ASC";
+	$sql .=" ORDER BY d.id ASC ";
+
 	$adatos = array( ':idpedido' => $idpedido );
 	$result = errorsql( $sql, $adatos );
 	return $result ;	
 }
 
-Function PrestamoAdd ( $idherramienta, $prestadas )
+Function Prestamo_Add ( $idherramienta, $prestadas )
 {
 	global $connection ;
 	$sql  = "INSERT INTO detalle ( idherramienta, prestadas ) VALUES ( :idherramienta, :prestadas )";
@@ -51,7 +52,7 @@ Function PrestamoUltPedido ()
 	return $idpedido ;
 }
 
-Function PrestamoGrabar( $idprofesor )
+Function Prestamo_Grabar( $idprofesor )
 {
 
 	$sql  = "UPDATE detalle SET idpedido = :idpedido , idprofesor = :idprofesor ";
@@ -69,5 +70,23 @@ Function PrestamoDel ( $idpedido )
 	$adatos = array( ':idpedido' => $idpedido );
 	$result = errorsql( $sql, $adatos );
 	return $result ;
+}
+
+Function Prestamo_Del ( $id )
+{
+	global $connection ;
+	$sql = "DELETE FROM detalle WHERE id = :id ";
+	$adatos = array( ':id' => $id );
+	$result = errorsql( $sql, $adatos );
+	return $result ;
 	
+}
+
+Function PrestamoProfesor( $idpedido = "0" )
+{
+	global $connection ;
+	$sql  ="SELECT d.idprofesor FROM detalle d WHERE d.idpedido = :idpedido LIMIT 1" ;
+	$adatos = array( ':idpedido' => $idpedido );
+	$result = errorsql( $sql, $adatos );
+	return $result ;	
 }
