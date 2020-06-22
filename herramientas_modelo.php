@@ -10,18 +10,8 @@ Function HerramientasListar()
 	$query .= "LEFT JOIN categorias c1 ON c1.id = h.idubicacion1 ";
 	$query .= "LEFT JOIN categorias c2 ON c2.id = h.idubicacion2 ";	
 	$query .= "LEFT JOIN categorias c3 ON c3.id = h.idubicacion3 ";
-	$query .= "LEFT JOIN categorias c4 ON c4.id = h.idcategoria ";	
-	try {
-	    $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$statement = $connection->prepare( $query );
-		$statement->execute();
-		$result = $statement->fetchAll();	    
-		return $result ;
-	} catch (PDOException $e) {
-		echo "Error en esta consulta :<pre> " . $query ."</pre>";
-	     echo "Falló la conexión: " . $e->getMessage() ;
-	}	
-	
+	$query .= "LEFT JOIN categorias c4 ON c4.id = h.idcategoria ";
+	return Errorsql( $query );
 	
 
 }
@@ -38,17 +28,7 @@ Function HerramientasID ( $id )
 	$query .= "LEFT JOIN categorias c4 ON c4.id = h.idcategoria ";	
 	$query .= "WHERE h.id = :id LIMIT 1";
 	$adatos = array( ':id' => $id ) ;
-
-	try {
-	    $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$statement = $connection->prepare( $query );
-		$statement->execute( $adatos );
-		$result = $statement->fetchAll();	    
-		return $result ;
-	} catch (PDOException $e) {
-		echo "Error en esta consulta :<pre> " . $query ."</pre>";
-	     echo "Falló la conexión: " . $e->getMessage() ;
-	}	
+	return Errorsql( $query, $adatos );
 }
 
 Function HerramientasAdd ( $name, $idcategoria, $idubicacion1, $idubicacion2, $idubicacion3, $cantidad )
@@ -57,16 +37,7 @@ Function HerramientasAdd ( $name, $idcategoria, $idubicacion1, $idubicacion2, $i
 	$query  = "INSERT INTO herramientas ( name, idcategoria, idubicacion1, idubicacion2, idubicacion3, cantidad )";
 	$query .= " VALUES ( :name, :idcategoria, :idubicacion1, :idubicacion2, :idubicacion3, :cantidad )";
 	$adatos = array( ':name' => $name, ':idcategoria' => $idcategoria, ':idubicacion1' => $idubicacion1, ':idubicacion2' => $idubicacion2, ':idubicacion3' => $idubicacion3, ':cantidad' => $cantidad );
-	try {
-	    $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$statement = $connection->prepare( $query );
-		$statement->execute( $adatos );
-		$result = $statement->fetchAll();	    
-		return $result ;
-	} catch (PDOException $e) {
-		GuardarError( $query, $e->getMessage() );
-
-	}	
+	return Errorsql( $query, $adatos );
 }
 
 Function HerramientasEdit( $id, $name, $idcategoria, $idubicacion1, $idubicacion2, $idubicacion3, $cantidad )
@@ -76,16 +47,7 @@ Function HerramientasEdit( $id, $name, $idcategoria, $idubicacion1, $idubicacion
 	$query .= "idubicacion1 = :idubicacion1 , idubicacion2 = :idubicacion2 , idubicacion3 = :idubicacion3 ,";
 	$query .= " cantidad = :cantidad WHERE id = :id ";
 	$adatos = array( ':id' => $id , ':name' => $name, ':idcategoria' => $idcategoria, ':idubicacion1' => $idubicacion1, ':idubicacion2' => $idubicacion2, ':idubicacion3' => $idubicacion3, ':cantidad' => $cantidad );
-	try {
-	    $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$statement = $connection->prepare( $query );
-		$statement->execute( $adatos );
-		$result = $statement->fetchAll();	    
-		return $result ;
-	} catch (PDOException $e) {
-		echo "Error en esta consulta :<pre> " . $query ."</pre>";
-	     echo "Falló la conexión: " . $e->getMessage() ;
-	}	
+	return Errorsql( $query, $adatos );
 }
 
 Function HerramientasDel ( $id )
@@ -93,16 +55,7 @@ Function HerramientasDel ( $id )
 	global $connection ;
 	$query = "DELETE FROM herramientas WHERE id= :id ";
 	$adatos = array( ':id' => $id );
-	try {
-	    $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$statement = $connection->prepare( $query );
-		$statement->execute( $adatos );
-		$result = $statement->fetchAll();	    
-		return $result ;
-	} catch (PDOException $e) {
-		echo "Error en esta consulta :<pre> " . $query ."</pre>";
-		echo "Falló la conexión: " . $e->getMessage() ;
-	}	
+	return Errorsql( $query, $adatos );
 }
 
 Function ReparacionAdd( $id, $problema, $cantidad )
@@ -112,16 +65,7 @@ Function ReparacionAdd( $id, $problema, $cantidad )
 	$query  = "INSERT INTO reparacion ( idherramienta, idestado, problema )";
 	$query .= " VALUES ( :idherramienta, :idestado, :problema )";
 	$adatos = array( ':idherramienta' => $id, ':idestado' => $idestado, ':problema' => $problema );
-	try {
-	    $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$statement = $connection->prepare( $query );
-		$statement->execute( $adatos );
-		$result = $statement->fetchAll();	    
-		return $result ;
-	} catch (PDOException $e) {
-		echo "Error en esta consulta :<pre> " . $query ."</pre>";
-	     echo "Falló la conexión: " . $e->getMessage() ;
-	}	
+	return Errorsql( $query, $adatos );
 }
 
 

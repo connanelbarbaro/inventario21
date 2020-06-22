@@ -54,14 +54,5 @@ Function ListaReparacion()
 {	
 	global $connection ;
 	$query = " SELECT * FROM reparacion ";
-	try {
-		$connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$statement = $connection->prepare( $query );
-		$statement->execute();
-		$result = $statement->fetchAll();	    
-		return $result ;
-	} catch (PDOException $e) {
-		die("Error en esta consulta :<pre> " . $query ."</pre>". "Fallo la conexion: " . $e->getMessage());
-	
-	}	
+	return errorsql( $query );
 }

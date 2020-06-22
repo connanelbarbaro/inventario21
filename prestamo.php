@@ -32,3 +32,29 @@ $_SESSION['detalle'] = array();
 <?php include_once('prestamo_modal.php'); ?>
 </body>
 </html>
+<script type="text/javascript">
+
+
+
+$(document).ready(function(){
+
+// CARGA PROFESORES EN MODAL	
+	var opcion = 4 ;
+	$.post("prestamo_controler.php", {opcion:opcion }, function(data){
+		$("#cbx_profesor").html(data);
+	});
+
+// CARGA HERRAMIENTAS EN MODAL	
+	var opcion = 5 ;
+	$.post("prestamo_controler.php", {opcion:opcion }, function(data){
+		$("#cbx_herramienta").html(data);
+	});
+	
+
+
+} );
+
+</script>
+
+
+

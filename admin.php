@@ -16,15 +16,10 @@
 	array( "En Reparacion", TotalReparacion() ),	
 	);
 	$all_herramientas = ReparacionListar();
-	$all_prestamo = PrestamoPendientes();
+//	$all_prestamo = PrestamoPendientes();
+	include_once('layouts/header.php');
 ?>
-<?php include_once('layouts/header.php'); ?>
 
-<div class="row">
-    <div class="col-md-6">
-        <?php echo display_msg($msg); ?>
-    </div>
-</div>
 <div class="row">
 	  <?php foreach ($adatos as  $datos): ?>
 		    <div class="col-md-3">
@@ -43,6 +38,7 @@
 </div>
 
 <!-- reportes -->
+<!--
 <div class="row">
 	<div class="col-md-6">
 		<div class="panel panel-default">
@@ -73,7 +69,8 @@
 			</table>
 		</div>	
 	</div>
-</div>	
+</div>
+
 <div class="row">
 	<div class="col-md-6">
 		<div class="panel panel-default">
@@ -112,5 +109,5 @@
 </div>	
 
 
-
+-->
 <?php include_once('layouts/footer.php'); ?>

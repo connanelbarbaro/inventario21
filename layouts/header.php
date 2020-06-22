@@ -1,3 +1,5 @@
+<? require_once('includes/load.php'); ?>
+
 <?php $user = current_user(); ?>
 <!DOCTYPE html>
   <html lang="en">

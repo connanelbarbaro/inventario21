@@ -212,10 +212,10 @@ function errorsql( $sql ="", $datos ="" )
 
 	if ( empty( $sql ) )
 	{
-	     $a .= "Consulta Vacia" ;
-	     ECHO $a ;
-		DIE( $a );
-		return $result ;
+		$error['consulta'] = "Consulta Vacia";
+		$error['mysql'] = "";            			
+		include_once ( "listarErrores.php");
+		exit();
 	}
 	try {
 		$connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -233,11 +233,13 @@ function errorsql( $sql ="", $datos ="" )
 		return $result ;
 
 	} catch (PDOException $e) {
-		$a = "Error en esta consulta :<pre> " . $sql."</pre>";
-	     $a .= "Falló la conexión: " . $e->getMessage() ;
-	     ECHO $a ;
-		DIE( $a );
-		return $result ;		
+		$error['consulta'] = $sql;
+		$error['mysql'] = $e->getMessage();
+		include_once("listarerrores.php");
+		exit();
 	}	
 
 }
+
+
+

@@ -4,7 +4,7 @@ page_require_level(1);
 $all_prestamos = PrestamoListar();
 ?>
 
-<table class="table table-bordered table-striped table-hover" id="myTable">
+<table class="table table-bordered table-striped table-hover" id="myTable1">
 	<thead>
 	    <tr>
 		   <th style="width: 5%;"> # </th>

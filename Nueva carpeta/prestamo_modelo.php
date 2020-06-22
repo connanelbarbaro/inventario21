@@ -11,17 +11,6 @@ Function PrestamoListar()
 	$sql .=" WHERE d.idestado = 'P'" ;
 	$sql .=" GROUP BY d.idpedido " ;
 	$sql .=" ORDER BY d.id ASC";
-	try {
-	    $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$statement = $connection->prepare( $sql );
-		$statement->execute();
-		$result = $statement->fetchAll();	    
-		return $result ;
-	} catch (PDOException $e) {
-		redirect('error.php',false);
-		echo "Error en esta consulta :<pre> " . $sql ."</pre>";
-	     echo "Falló la conexión: " . $e->getMessage() ;
-	     exit ;
-	}	
+	return Errorsql( $query );
 }
 

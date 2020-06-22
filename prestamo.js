@@ -1,6 +1,8 @@
 $(document).ready(function(){
 	
+
 // DATATABLE
+	
 	var dataTable = $('#myTable').DataTable({
 		"language": { "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
 		"lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
@@ -9,7 +11,6 @@ $(document).ready(function(){
 		"buttons": [ 'copy', 'csv', 'excel', 'pdf', 'print' ],
 
 	});
-
 
 // MODAL AGREGAR PEDIDO
 	$('#add_button').click(function(){
