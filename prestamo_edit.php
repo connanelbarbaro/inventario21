@@ -10,6 +10,7 @@ switch ($opcion)
 		$idpedido = (isset($_POST["idpedido"])) ? $_POST["idpedido"] : '0';
 		$idherramienta = (isset($_POST["idherramienta"])) ? $_POST["idherramienta"] : '0';
 		$prestadas  = (isset($_POST["prestadas"])) ? $_POST["prestadas"] : '0';
+		$idProfesor = (isset($_POST["idprofesor"])) ? $_POST["idprofesor"] : '0';
 		$json['success'] = Prestamo_Add( $idpedido, $idherramienta, $prestadas );
 		IF( $json['success'] )
 		{
@@ -22,7 +23,7 @@ switch ($opcion)
 	case 2:
 // GRABAR PEDIDO	
 		$idProfesor = (isset($_POST["idprofesor"])) ? $_POST["idprofesor"] : '0';
-		Prestamo_Grabar( $idProfesor );    
+		Prestamo_Grabar( $idProfesor, 		$idpedido = (isset($_POST["idpedido"])) ? $_POST["idpedido"] : '0'; );    
 		$json['msj'] = 'Prestamo Agregado';
 		$json['success'] = True;		
 		echo json_encode($json);

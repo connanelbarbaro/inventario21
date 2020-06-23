@@ -1,4 +1,11 @@
 <?php
+// 1 LISTAR TABLA
+// 2 BUSCAR REGISTRO
+// 3 AGREGAR REGITRO
+// 4 BORRAR REGITRO
+// 5 ACTUALIZAR REGITRO
+// 6
+
 require_once('prestamo_modelo.php');
 require_once('categoria_modelo.php');
 require_once('herramientas_modelo.php');

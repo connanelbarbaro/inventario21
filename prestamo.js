@@ -79,6 +79,7 @@ $(document).ready(function(){
 	$(document).on('click', '#btn-agregar-producto', function(event){
 // 1 herramienta
 		event.preventDefault();
+		var idprofesor = $('#cbx_profesor').val();
 		var idherramienta = $('#cbx_herramienta').val();
 		var idpedido = $('#idpedido').val();
 		var prestadas = $('#txt_cantidad').val();
@@ -86,7 +87,7 @@ $(document).ready(function(){
 		$.ajax({
 			url: 'prestamo_edit.php',
 			type: 'post',
-			data: { idherramienta:idherramienta, prestadas:prestadas, opcion:opcion, idpedido:idpedido },
+			data: { idherramienta:idherramienta, prestadas:prestadas, opcion:opcion, idpedido:idpedido, idprofesor:idprofesor },
 			dataType: 'json',
 			success: function(data) {
 				var opcion = 6 ;					
@@ -137,16 +138,18 @@ $(document).ready(function(){
 		event.preventDefault();
 		var idprofesor = $('#cbx_profesor').val();
 		var operation = "add" ;		
+		var idpedido = $('#idpedido').val();
 		if (idprofesor =="0"){
 			alertify.error("Debes seleccionar un cliente");
 			$("#cbx_profesor").focus();
 			return false;
 		}
 		var opcion = 2 ;	
+
 		$.ajax({
 			url: 'prestamo_edit.php',
 			type: 'post',
-			data: { idprofesor:idprofesor , opcion:opcion  },
+			data: { idprofesor:idprofesor , opcion:opcion, idpedido:idpedido  },
 			dataType: 'json',
 			success: function(data) {
 				// CARGAR PEDIDOS
