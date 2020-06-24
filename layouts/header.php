@@ -35,7 +35,11 @@
       <div class="logo pull-left"> TECNICA 3 - INVENTARIO </div>
       <div class="header-content">
       <div class="header-date pull-left">
+		<div id="reloj" class="reloj">00 : 00 : 00
+		</div>      
+<!--
         <strong><?php echo date("F j, Y, G:i a");?></strong>
+-->        
       </div>
       <div class="pull-right clearfix">
         <ul class="info-menu list-inline list-unstyled">
@@ -68,6 +72,32 @@
         </ul>
       </div>
      </div>
+<script type="text/javascript">
+function actual() {
+         fecha=new Date(); //Actualizar fecha.
+         hora=fecha.getHours(); //hora actual
+         minuto=fecha.getMinutes(); //minuto actual
+         segundo=fecha.getSeconds(); //segundo actual
+         if (hora<10) { //dos cifras para la hora
+            hora="0"+hora;
+            }
+         if (minuto<10) { //dos cifras para el minuto
+            minuto="0"+minuto;
+            }
+         if (segundo<10) { //dos cifras para el segundo
+            segundo="0"+segundo;
+            }
+         //ver en el recuadro del reloj:
+         mireloj = hora+" : "+minuto+" : "+segundo;	
+				 return mireloj; 
+         }
+function actualizar() { //funci&oacute;n del temporizador
+   mihora=actual(); //recoger hora actual
+   mireloj=document.getElementById("reloj"); //buscar elemento reloj
+   mireloj.innerHTML=mihora; //incluir hora en elemento
+	 }
+setInterval(actualizar,1000); //iniciar temporizador
+</script>     
     </header>
     <div class="sidebar">
       <?php if($user['user_level'] === '1'): ?>

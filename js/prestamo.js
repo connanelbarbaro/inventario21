@@ -1,9 +1,25 @@
 $(document).ready(function(){
-	
 
+	var opcion = 1 ;
+	$.post("prestamo_controler.php", {opcion:opcion }, function(data){
+		alert( "1" );		
+		$("#detalle-producto1").html(data);
+	});
+
+// CARGA PROFESORES EN MODAL	
+	var opcion = 4 ;
+	$.post("prestamo_controler.php", {opcion:opcion }, function(data){
+		$("#cbx_profesor").html(data);
+	});
+
+// CARGA HERRAMIENTAS EN MODAL	
+	var opcion = 5 ;
+	$.post("prestamo_controler.php", {opcion:opcion }, function(data){
+		$("#cbx_herramienta").html(data);
+	});
 // DATATABLE
 	
-	var dataTable = $('#myTable').DataTable({
+	var dataTable = $('#myTable1').DataTable({
 		"language": { "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
 		"lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
 		"dom": "<'row'<'col-sm-6'l><'col-sm-6'f>>" + "<'row'<'col-sm-12'tr>>" + "<'row'<'col-sm-5'B><'col-sm-7'p>>",
@@ -11,7 +27,7 @@ $(document).ready(function(){
 		"buttons": [ 'copy', 'csv', 'excel', 'pdf', 'print' ],
 
 	});
-
+	
 // MODAL AGREGAR PEDIDO
 	$('#add_button').click(function(){
 		var idpedido = 0 ;
@@ -39,9 +55,10 @@ $(document).ready(function(){
 			dataType:"json",
 			success:function(data)
 			{
-				var msg = alertify.success(data.msj, 0);				
-				$(".detalle-producto1").load('prestamo_list.php');
-				msg.dismiss();		
+				var opcion = 1 ;
+				$.post("prestamo_controler.php", {opcion:opcion }, function(data){
+					$("#detalle-producto1").html(data);
+				});
 			}
 		})
 	});
@@ -153,9 +170,10 @@ $(document).ready(function(){
 			dataType: 'json',
 			success: function(data) {
 				// CARGAR PEDIDOS
-				var msg = alertify.success('Cargando Pedidos', 0);
-				$(".detalle-producto1").load('prestamo_list.php');
-				msg.dismiss();		
+				var opcion = 1 ;
+				$.post("prestamo_controler.php", {opcion:opcion }, function(data){
+					$("#detalle-producto1").html(data);
+				});
 				$('#user_form')[0].reset();
 				$('#userModal').modal('hide');
 			},

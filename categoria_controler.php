@@ -13,6 +13,11 @@ $output = array();
 $json['msj'] = 'Error';
 $json['success'] = false;
 switch ($opcion) {
+	case 1:
+	
+	
+	
+	
 	case 2:
 		$result = CategoriaID ( $user_id );
 		foreach($result as $row)

@@ -29,6 +29,7 @@ switch ($opcion) {
 		foreach ($all_prestamos as $prestamo)
 		{
 			echo '<tr>';
+			echo '<td class="text-left">'.$prestamo['id'].'</td>';
 			echo '<td class="text-left">'.$prestamo['profesor'].'</td>';
 			echo '<td class="text-right">'.$prestamo['totalprestadas'].'</td>';
 			echo '<td class="text-right">'.$prestamo['totalpendientes'].'</td>';
