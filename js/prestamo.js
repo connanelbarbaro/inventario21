@@ -1,11 +1,5 @@
 $(document).ready(function(){
 
-	var opcion = 1 ;
-	$.post("prestamo_controler.php", {opcion:opcion }, function(data){
-		alert( "1" );		
-		$("#detalle-producto1").html(data);
-	});
-
 // CARGA PROFESORES EN MODAL	
 	var opcion = 4 ;
 	$.post("prestamo_controler.php", {opcion:opcion }, function(data){

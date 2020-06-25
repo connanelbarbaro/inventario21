@@ -10,11 +10,12 @@ Function HerramientasListar()
 	$query .= "LEFT JOIN categorias c1 ON c1.id = h.idubicacion1 ";
 	$query .= "LEFT JOIN categorias c2 ON c2.id = h.idubicacion2 ";	
 	$query .= "LEFT JOIN categorias c3 ON c3.id = h.idubicacion3 ";
-	$query .= "LEFT JOIN categorias c4 ON c4.id = h.idcategoria ";
+	$query .= "LEFT JOIN categorias c4 ON c4.id = h.idcategoria ";	
 	return Errorsql( $query );
-	
+
 
 }
+
 
 Function HerramientasID ( $id )
 {

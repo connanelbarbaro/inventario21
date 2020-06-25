@@ -218,7 +218,7 @@ function errorsql( $sql ="", $datos ="" )
 		exit();
 	}
 	try {
-		$connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+//		$connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$statement = $connection->prepare( $sql );
 		if ( is_array( $datos ) )
 		{
