@@ -2,7 +2,7 @@ $(document).ready(function(){
 	
 // LISTAR OPCION = 1
 	var opcion = 1 ;	
-	var dataTable1 = $('#myTable').DataTable({
+	var dataTable = $('#myTable').DataTable({
 		"scrollX": true, 
 		"autoWidth": true,
 		"language": { "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
@@ -41,7 +41,9 @@ $(document).ready(function(){
 		$(".modal-header").css( "color", "white" );
 		$(".modal-title").text("Alta de Herramienta");
 		$('#id').val( 0 );
-		$('#opcion').val( 3 );			    
+		$('#opcion').val( 3 );	
+		$('#cantidad').val( 1 );
+		
 		$('#userModal').modal('show');	    
 	});
 
@@ -109,7 +111,6 @@ $(document).ready(function(){
 // GRABAR - TOMA LA OPCION DE LA VARIABLE OPERATION
 	$('#user_form').submit(function(e){            		
 		event.preventDefault();
-		alert ( $('#opcion').val() ) ;
 		console.log( $('#opcion').val() );
 		var id = $('#id').val();
 		var name = $('#name').val();
@@ -125,8 +126,13 @@ $(document).ready(function(){
 				idubicacion2:idubicacion2, idubicacion3:idubicacion3, cantidad:cantidad },
 			dataType: 'json',
 			success: function(data) {
-					alertify.success(data.msj);
 					$('#userModal').modal('hide');
+					if( data.success ==true ){
+						alertify.success(data.msj);
+					}else{
+						alertify.error(data.msj);
+					}						
+					dataTable.ajax.reload(null, false);					
 			},
 			error : function(xhr, status) { alert('Error, Grabar') },
 			complete : function(xhr, status) { alert('OK. al grabar') }			

@@ -43,8 +43,8 @@ switch ($opcion) {
 		break ;
     case 3:
 		$json['msj'] = "Herramienta Agregada";
-		HerramientasAdd( $name, $idcategoria, $idubicacion1, $idubicacion2, $idubicacion3, $cantidad );
-		echo json_encode($json);
+		$json['msj'] = HerramientasAdd( $name, $idcategoria, $idubicacion1, $idubicacion2, $idubicacion3, $cantidad );
+		echo $json ;
 		break ;		
     case 4:
 		$json['msj'] = "Herramienta Borrada";

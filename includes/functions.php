@@ -132,7 +132,7 @@ function randString($length = 5)
 }
 
 Function _debug( $var ){
-  echo '<script type="text/javascript"> alert("'.$var.'"); </script>';
+  echo '<script type="text/javascript"> console.log("'.$var.'"); </script>';
 return "" ; 
 }
 
@@ -226,11 +226,13 @@ function errorsql( $sql ="", $datos ="" )
 		} else {
 			$result = $statement->execute();			
 		}
+		echo "\n PDO::errorCode(): ", $result->errorCode();		
 		IF( $lSelect )
 		{
 			$result = $statement->fetchAll();	 
 		}
-		return $result ;
+		RETURN $result->errorCode() ;
+//		return $result ;
 
 	} catch (PDOException $e) {
 		$error['consulta'] = $sql;
@@ -240,6 +242,13 @@ function errorsql( $sql ="", $datos ="" )
 	}	
 
 }
-
+function archivolog( $texto = "" ) {
+	
+	$archivo = fopen("log.txt","w+b");
+	fwrite($archivo, $texto );
+	fflush($archivo);
+	fclose($archivo);
+}	
+?>
 
 

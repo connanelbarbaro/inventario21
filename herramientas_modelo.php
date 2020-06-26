@@ -34,7 +34,8 @@ Function HerramientasID ( $id )
 	$query .= "LEFT JOIN categorias c1 ON c1.id = h.idubicacion1 ";
 	$query .= "LEFT JOIN categorias c2 ON c2.id = h.idubicacion2 ";	
 	$query .= "LEFT JOIN categorias c3 ON c3.id = h.idubicacion3 ";
-	$query .= "LEFT JOIN categorias c4 ON c4.id = h.idcategoria ";	
+	$query .= "LEFT JOIN categorias c4 ON c4.id = h.idcategoria ";
+	$query .= " ORDER BY h.name ";	
 	$query .= "WHERE h.id = :id LIMIT 1";
 	return Errorsql( $query, array( ':id' => $id ) );	
 }
@@ -45,6 +46,9 @@ Function HerramientasAdd ( $name, $idcategoria, $idubicacion1, $idubicacion2, $i
 	$query  = "INSERT INTO herramientas ( name, idcategoria, idubicacion1, idubicacion2, idubicacion3, cantidad )";
 	$query .= " VALUES ( :name, :idcategoria, :idubicacion1, :idubicacion2, :idubicacion3, :cantidad )";
 	$adatos = array( ':name' => $name, ':idcategoria' => $idcategoria, ':idubicacion1' => $idubicacion1, ':idubicacion2' => $idubicacion2, ':idubicacion3' => $idubicacion3, ':cantidad' => $cantidad );
+	archivolog( $query );
+		include_once("listarerrores.php");
+
 	return Errorsql( $query, $adatos );
 }
 

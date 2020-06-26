@@ -87,11 +87,12 @@ function suggetion() {
     suggetion();
     // Callculate total ammont
     total();
-
+/*
     $('.datepicker')
         .datepicker({
             format: 'yyyy-mm-dd',
             todayHighlight: true,
             autoclose: true
         });
+*/
   });
