@@ -11,11 +11,19 @@ Function HerramientasListar()
 	$query .= "LEFT JOIN categorias c2 ON c2.id = h.idubicacion2 ";	
 	$query .= "LEFT JOIN categorias c3 ON c3.id = h.idubicacion3 ";
 	$query .= "LEFT JOIN categorias c4 ON c4.id = h.idcategoria ";	
-	return Errorsql( $query );
+	try {
+		$resultado = $connection->prepare($query);
+		$resultado->execute();        
+		$resultado=$resultado->fetchAll(PDO::FETCH_ASSOC);
+		return $resultado ;
 
-
+	} catch (PDOException $e) {
+		$error['consulta'] = $query ;
+		$error['mysql'] = $e->getMessage();
+		include_once("listarerrores.php");
+		exit();
+	}	
 }
-
 
 Function HerramientasID ( $id )
 {
@@ -28,8 +36,7 @@ Function HerramientasID ( $id )
 	$query .= "LEFT JOIN categorias c3 ON c3.id = h.idubicacion3 ";
 	$query .= "LEFT JOIN categorias c4 ON c4.id = h.idcategoria ";	
 	$query .= "WHERE h.id = :id LIMIT 1";
-	$adatos = array( ':id' => $id ) ;
-	return Errorsql( $query, $adatos );
+	return Errorsql( $query, array( ':id' => $id ) );	
 }
 
 Function HerramientasAdd ( $name, $idcategoria, $idubicacion1, $idubicacion2, $idubicacion3, $cantidad )

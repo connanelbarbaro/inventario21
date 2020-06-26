@@ -87,8 +87,8 @@ $all_ubicacion3 = CategoriaListar( 7 );
 				
 				<div class="modal-footer">
 					<input type="hidden" name="id" id="id" />
-					<input type="hidden" name="operation" id="operation" />
-					<input type="submit" name="action" id="action" class="btn btn-success" value="Add" />
+					<input type="hidden" name="opcion" id="opcion" value ="0" />
+					<input type="submit" name="action" id="action" class="btn btn-success" value="Aceptar" />
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				</div>
 			</div>
