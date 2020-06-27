@@ -131,10 +131,22 @@ function randString($length = 5)
   return $str;
 }
 
-Function _debug( $var ){
-  echo '<script type="text/javascript"> console.log("'.$var.'"); </script>';
-return "" ; 
+Function _debug( $data ){
+  $html = "";
+      $coll;
+  
+      if (is_array($data) || is_object($data)) {
+          $coll = json_encode($data);
+      } else {
+          $coll = $data;
+      }
+  
+      $html = "<script>console.log('PHP: ${coll}');</script>";
+  
+      echo($html);
+      
 }
+
 
 Function _notificacion($tipo, $mensaje ){
 

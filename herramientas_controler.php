@@ -22,11 +22,16 @@ $output = array();
 $json = array();
 $json['msj'] = $opcion;
 $json['success'] = false;
+
+if ( $opcion = 1 )
+{
+		echo json_encode(HerramientasListar(), JSON_UNESCAPED_UNICODE);//envio el array final el formato json a AJAX
+} else {
+	
+ECHO "HOLA" ;
+ECHO $OPCION ;
 switch ($opcion) {
 	case 1:	
-		echo json_encode(HerramientasListar(), JSON_UNESCAPED_UNICODE);//envio el array final el formato json a AJAX
-		break ;
-		
 	case 2:
 		$result = HerramientasID ( $id );
 		foreach($result as $row)
@@ -43,7 +48,7 @@ switch ($opcion) {
 		break ;
     case 3:
 		$json['msj'] = "Herramienta Agregada";
-		$json['msj'] = HerramientasAdd( $name, $idcategoria, $idubicacion1, $idubicacion2, $idubicacion3, $cantidad );
+		$json['success'] = HerramientasAdd( $name, $idcategoria, $idubicacion1, $idubicacion2, $idubicacion3, $cantidad );
 		echo $json ;
 		break ;		
     case 4:
@@ -62,5 +67,5 @@ switch ($opcion) {
 		echo json_encode($json);
 		break ;		
 }
-
+}
 ?>

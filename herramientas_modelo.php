@@ -47,8 +47,6 @@ Function HerramientasAdd ( $name, $idcategoria, $idubicacion1, $idubicacion2, $i
 	$query .= " VALUES ( :name, :idcategoria, :idubicacion1, :idubicacion2, :idubicacion3, :cantidad )";
 	$adatos = array( ':name' => $name, ':idcategoria' => $idcategoria, ':idubicacion1' => $idubicacion1, ':idubicacion2' => $idubicacion2, ':idubicacion3' => $idubicacion3, ':cantidad' => $cantidad );
 	archivolog( $query );
-		include_once("listarerrores.php");
-
 	return Errorsql( $query, $adatos );
 }
 

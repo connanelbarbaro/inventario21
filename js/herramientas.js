@@ -34,7 +34,6 @@ $(document).ready(function(){
 
 // AGREGAR OPCION = 3
 	$('#btn_add').click(function(){
-		console.log( "AGREGAR" );
 		$("#user_form").trigger("reset");
 		$('#div_problema').html('<input type="hidden" name="problema" id="problema" />');	    
 		$(".modal-header").css( "background-color", "#17a2b8");
@@ -111,7 +110,7 @@ $(document).ready(function(){
 // GRABAR - TOMA LA OPCION DE LA VARIABLE OPERATION
 	$('#user_form').submit(function(e){            		
 		event.preventDefault();
-		console.log( $('#opcion').val() );
+		alertify.success( 'GRABAR');
 		var id = $('#id').val();
 		var name = $('#name').val();
 		var idcategoria = $('#idcategoria').val();
@@ -128,14 +127,12 @@ $(document).ready(function(){
 			success: function(data) {
 					$('#userModal').modal('hide');
 					if( data.success ==true ){
-						alertify.success(data.msj);
+						alertify.success( 'OK. al grabar2');
 					}else{
-						alertify.error(data.msj);
+						alertify.error('Error, Grabar2');
 					}						
-					dataTable.ajax.reload(null, false);					
 			},
 			error : function(xhr, status) { alert('Error, Grabar') },
-			complete : function(xhr, status) { alert('OK. al grabar') }			
 		});
 
 	});

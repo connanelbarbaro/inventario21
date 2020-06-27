@@ -1,6 +1,8 @@
 <?php
 // Checkin What level user has permission to view this page
   require_once('includes/load.php');
+  _debug( "INIXIO" );
+
 ?>
 <?php include_once('layouts/header.php'); ?>
 		<div class="row">
@@ -21,7 +23,7 @@
 								<th class="text-center" style="width: 1%;">#</th>
 								<th class="text-left" style="width: 15%;"> Descripcion </th>
 								<th class="text-center" style="width: 1%;"> Stock </th>
-								<th class="text-center" style="width: 2%;"> Acciones </th>
+								<th class="text-center" style="width: 1%;"> Acciones </th>
 							</thead>
 							<tbody></tbody>
 						</table>
