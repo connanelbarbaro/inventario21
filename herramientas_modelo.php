@@ -28,6 +28,7 @@ Function HerramientasListar()
 
 Function HerramientasID ( $id )
 {
+echo _debug( $id );
 	global $connection ;
 	$query  = "SELECT h.id, h.name, h.cantidad, h.idcategoria, h.date, h.idubicacion1, h.idubicacion2, h.idubicacion3, " ;
 	$query .= "c1.name as ubicacion_1, c2.name as ubicacion_2, c3.name as ubicacion_3, c4.name as categoria ";
@@ -37,10 +38,10 @@ Function HerramientasID ( $id )
 	$query .= "LEFT JOIN categorias c3 ON c3.id = h.idubicacion3 ";
 	$query .= "LEFT JOIN categorias c4 ON c4.id = h.idcategoria ";
 	$query .= " ORDER BY h.name ";	
-	$query .= "WHERE h.id = :id ";
+	$query .= "WHERE h.id = '". $id ."'" ;
 	try {
 		$resultado = $connection->prepare($query);
-		$resultado->execute( array( ':id' => $id ) );        
+//		$resultado->execute( array( ':id' => $id ) );        
 		$resultado=$resultado->fetchAll();
 		return $resultado ;
 

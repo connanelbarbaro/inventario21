@@ -26,8 +26,8 @@ switch ($opcion) {
 		break ;
     case 2:
 		$output = array() ;
+_debug( $id );
 		$result = HerramientasID ( $id );
-
 		foreach($result as $row)
 		{
 			$output["id"] = $row["id"];
