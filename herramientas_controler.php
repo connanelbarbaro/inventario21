@@ -18,22 +18,16 @@ $idubicacion3 = (isset($_POST["idubicacion3"])) ? $_POST["idubicacion3"] : '0';
 $cantidad = (isset($_POST["cantidad"])) ? $_POST["cantidad"] : '0';
 $problema = (isset($_POST["problema"])) ? $_POST["problema"] : '';
 
-$output = array();
-$json = array();
-$json['msj'] = $opcion;
+$json['msj'] = 'Error $opcion Sin Valor';
 $json['success'] = false;
-
-if ( $opcion = 1 )
-{
-		echo json_encode(HerramientasListar(), JSON_UNESCAPED_UNICODE);//envio el array final el formato json a AJAX
-} else {
-	
-ECHO "HOLA" ;
-ECHO $OPCION ;
 switch ($opcion) {
-	case 1:	
-	case 2:
+    case 1:	
+		echo json_encode(HerramientasListar(), JSON_UNESCAPED_UNICODE);//envio el array final el formato json a AJAX
+		break ;
+    case 2:
+		$output = array() ;
 		$result = HerramientasID ( $id );
+
 		foreach($result as $row)
 		{
 			$output["id"] = $row["id"];
@@ -47,25 +41,28 @@ switch ($opcion) {
 		echo json_encode($output);
 		break ;
     case 3:
-		$json['msj'] = "Herramienta Agregada";
-		$json['success'] = HerramientasAdd( $name, $idcategoria, $idubicacion1, $idubicacion2, $idubicacion3, $cantidad );
-		echo $json ;
+		$json['success'] = HerramientasAdd( $name, $idcategoria, $idubicacion1, $idubicacion2, $idubicacion3, $cantidad ) ;
+		$json['msj'] = ( $json['success'] ) ? 'Herramienta, Agregada' : 'Herramientas, Error al Agregar';
+		echo json_encode($json);
 		break ;		
     case 4:
-		$json['msj'] = "Herramienta Borrada";
-		HerramientasDel( $id );
+		$json['success'] = HerramientasDel( $id );
+		$json['msj'] = ( $json['success'] ) ? 'Herramienta, Borrada' : 'Herramientas, Error al Borrar';
 		echo json_encode($json);
 		break ;		
-    case 5:		
-		HerramientasEdit( $id, $name, $idcategoria, $idubicacion1, $idubicacion2, $idubicacion3, $cantidad );
-		$json['msj'] = "Herramienta Actualizada";
+    case 5:
+		$json['success'] = HerramientasEdit( $id, $name, $idcategoria, $idubicacion1, $idubicacion2, $idubicacion3, $cantidad );
+		$json['msj'] = ( $json['success'] ) ? 'Herramienta, Actualizada' : 'Herramientas, Error Actualizar';
 		echo json_encode($json);
-		break ;		
+		break ;		    
     case 6:		
-		ReparacionAdd( $id, $problema, $cantidad  );
-		$json['msj'] = "Herramienta en Reparacion";		
+		$json['success'] = ReparacionAdd( $id, $problema, $cantidad  );
+		$json['msj'] = ( $json['success'] ) ? 'Herramienta, Reparacion Agregada' : 'Herramientas, Error en reparacion';
 		echo json_encode($json);
+		break ;		    
+	default:
+		echo json_encode($json);	
 		break ;		
-}
 }
 ?>
+

@@ -11,7 +11,7 @@ $(document).ready(function(){
 		"pagingType": "simple",
 		"buttons": [ 'copy', 'csv', 'excel', 'pdf', 'print' ],
 	    "ajax":{            
-		   "url": "herramientas_controler.php", 
+		   "url": 'herramientas_controler.php', 
 		   "method": 'POST', //usamos el metodo POST
 		   "data":{ opcion:opcion }, //enviamos opcion 4 para que haga un SELECT
 		   "dataSrc":""
@@ -42,7 +42,6 @@ $(document).ready(function(){
 		$('#id').val( 0 );
 		$('#opcion').val( 3 );	
 		$('#cantidad').val( 1 );
-		
 		$('#userModal').modal('show');	    
 	});
 
@@ -54,7 +53,7 @@ $(document).ready(function(){
 		var opcion = 2 ; // BUSCAR X ID		
 	    $('#div_problema').html('<input type="hidden" name="problema" id="problema" />');
 		$.ajax({
-			url:"herramientas_controler.php",
+		     url: 'herramientas_controler.php', 
 			method:"POST",
 			data:{ id:id , opcion:opcion },
 			dataType:"json",
@@ -84,13 +83,12 @@ $(document).ready(function(){
 		var opcion = 2 ; // BUSCAR X ID		
 	     $('#div_problema').html('<input type="hidden" name="problema" id="problema" />');
 		$.ajax({
-			url:"herramientas_controler.php",
+		     url: "herramientas_list.php", 
 			method:"POST",
 			data:{ id:id , opcion:opcion },
 			dataType:"json",
 			success:function(data)
 			{
-				opcion = 4 ;
 				$('#id').val(id);
 				$('#name').val(data.name);
 				$('#idcategoria').val(data.idcategoria);
@@ -118,6 +116,7 @@ $(document).ready(function(){
 		var idubicacion2 = $('#idubicacion2').val();
 		var idubicacion3 = $('#idubicacion3').val();
 		var cantidad = $('#cantidad').val();
+		var opcion = $('#opcion').val();		
 		$.ajax({
 			url: 'herramientas_controler.php',
 			type: 'post',
@@ -125,14 +124,35 @@ $(document).ready(function(){
 				idubicacion2:idubicacion2, idubicacion3:idubicacion3, cantidad:cantidad },
 			dataType: 'json',
 			success: function(data) {
-					$('#userModal').modal('hide');
-					if( data.success ==true ){
-						alertify.success( 'OK. al grabar2');
-					}else{
-						alertify.error('Error, Grabar2');
-					}						
+				if ( data.success ) {				
+					alertify.success(data.msj );
+				} else {
+					alertify.error(data.msj );					
+				}
+				$('#userModal').modal('hide');
 			},
-			error : function(xhr, status) { alert('Error, Grabar') },
+			error : function(jqXHR, exception, status ) {
+				  var msg = '';
+				   if (jqXHR.status === 0) {
+					  msg = 'Not connect.\n Verify Network.';
+				   } else if (jqXHR.status == 404) {
+					  msg = 'Requested page not found. [404]';
+				   } else if (jqXHR.status == 500) {
+					  msg = 'Internal Server Error [500].';
+				   } else if (exception === 'parsererror') {
+					  msg = 'Requested JSON parse failed.';
+				   } else if (exception === 'timeout') {
+					  msg = 'Time out error.';
+				   } else if (exception === 'abort') {
+					  msg = 'Ajax request aborted.';
+				   } else {
+					  msg = 'Uncaught Error.\n' + jqXHR.responseText;
+				   }
+                                         console.log( "ERROR" );
+				console.log( jqXHR );			
+				console.log( msg );
+				console.log( status ) ;
+				},
 		});
 
 	});
@@ -152,7 +172,7 @@ $(document).ready(function(){
 		var id = parseInt(fila.find('td:eq(0)').text()); //capturo el ID
 		var opcion = 2 ; // BUSCAR X ID		
 		$.ajax({
-			url:"herramientas_controler.php",
+		     url: "herramientas_list.php", 
 			method:"POST",
 			data:{ id:id , opcion:opcion },
 			dataType:"json",

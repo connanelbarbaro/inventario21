@@ -144,6 +144,7 @@ Function _debug( $data ){
       $html = "<script>console.log('PHP: ${coll}');</script>";
   
       echo($html);
+      return "" ;
       
 }
 
@@ -238,13 +239,11 @@ function errorsql( $sql ="", $datos ="" )
 		} else {
 			$result = $statement->execute();			
 		}
-		echo "\n PDO::errorCode(): ", $result->errorCode();		
 		IF( $lSelect )
 		{
 			$result = $statement->fetchAll();	 
 		}
-		RETURN $result->errorCode() ;
-//		return $result ;
+		return $result ;
 
 	} catch (PDOException $e) {
 		$error['consulta'] = $sql;

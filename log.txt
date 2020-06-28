@@ -1,0 +1,1 @@
+INSERT INTO herramientas ( name, idcategoria, idubicacion1, idubicacion2, idubicacion3, cantidad ) VALUES ( :name, :idcategoria, :idubicacion1, :idubicacion2, :idubicacion3, :cantidad )

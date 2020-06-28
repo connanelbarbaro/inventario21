@@ -23,6 +23,7 @@ Function HerramientasListar()
 		include_once("listarerrores.php");
 		exit();
 	}	
+
 }
 
 Function HerramientasID ( $id )
@@ -36,7 +37,20 @@ Function HerramientasID ( $id )
 	$query .= "LEFT JOIN categorias c3 ON c3.id = h.idubicacion3 ";
 	$query .= "LEFT JOIN categorias c4 ON c4.id = h.idcategoria ";
 	$query .= " ORDER BY h.name ";	
-	$query .= "WHERE h.id = :id LIMIT 1";
+	$query .= "WHERE h.id = :id ";
+	try {
+		$resultado = $connection->prepare($query);
+		$resultado->execute( array( ':id' => $id ) );        
+		$resultado=$resultado->fetchAll();
+		return $resultado ;
+
+	} catch (PDOException $e) {
+		$error['consulta'] = $query ;
+		$error['mysql'] = $e->getMessage();
+		include_once("listarerrores.php");
+		exit();
+	}	
+	
 	return Errorsql( $query, array( ':id' => $id ) );	
 }
 

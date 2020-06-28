@@ -1,8 +1,6 @@
 <?php
 // Checkin What level user has permission to view this page
   require_once('includes/load.php');
-  _debug( "INIXIO" );
-
 ?>
 <?php include_once('layouts/header.php'); ?>
 		<div class="row">

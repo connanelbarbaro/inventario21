@@ -20,7 +20,7 @@ $idProfesor = (isset($_POST["idprofesor"])) ? $_POST["idprofesor"] : '0';
 $idpedido = (isset($_POST["idpedido"])) ? $_POST["idpedido"] : '0';
 
 $output = array();
-$json['msj'] = 'Error';
+$json['msj'] = 'Error Sin Valor de $Opcion';
 $json['success'] = false;
 switch ($opcion) {
 	case 1:
@@ -119,5 +119,7 @@ switch ($opcion) {
 		break;
 		
 }
+echo json_encode($output);
+
 
 ?>
