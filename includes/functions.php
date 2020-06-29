@@ -141,7 +141,7 @@ Function _debug( $data ){
           $coll = $data;
       }
   
-      $html = "<script>console.log('PHP: ${coll}');</script>";
+      $html = "<script>console.log('${coll}');</script>";
   
       echo($html);
       return "" ;
@@ -217,6 +217,10 @@ function Boton_edicion( $id )
 	return $boton ;
 }
 
+
+
+
+
 function errorsql( $sql ="", $datos ="" )
 {
 	global $connection ;
@@ -231,7 +235,6 @@ function errorsql( $sql ="", $datos ="" )
 		exit();
 	}
 	try {
-//		$connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$statement = $connection->prepare( $sql );
 		if ( is_array( $datos ) )
 		{
@@ -253,6 +256,46 @@ function errorsql( $sql ="", $datos ="" )
 	}	
 
 }
+function errorsqlPDO( $sql ="", $datos ="" )
+{
+	global $connection ;
+	$lSelect =stristr($sql, 'SELECT');
+	$result = False ;
+
+	if ( empty( $sql ) )
+	{
+		$error['consulta'] = "Consulta Vacia";
+		$error['mysql'] = "";            			
+		include_once ( "listarErrores.php");
+		exit();
+	}
+	try {
+		$statement = $connection->prepare( $sql );
+		if ( is_array( $datos ) )
+		{
+			$result = $statement->execute( $datos );
+		} else {
+			$result = $statement->execute();			
+		}
+		IF( $lSelect )
+		{
+			$result = $statement->fetchAll( PDO::FETCH_ASSOC );	 
+		}
+		return $result ;
+
+	} catch (PDOException $e) {
+		$error['consulta'] = $sql;
+		$error['mysql'] = $e->getMessage();
+		include_once("listarerrores.php");
+		exit();
+	}	
+
+}
+
+
+
+
+
 function archivolog( $texto = "" ) {
 	
 	$archivo = fopen("log.txt","w+b");

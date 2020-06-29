@@ -42,6 +42,7 @@ $(document).ready(function(){
 		$('#id').val( 0 );
 		$('#opcion').val( 3 );	
 		$('#cantidad').val( 1 );
+		$('#problema').val( "" );		
 		$('#userModal').modal('show');	    
 	});
 
@@ -51,7 +52,7 @@ $(document).ready(function(){
 		var fila = $(this).closest("tr");	        
 		var id = parseInt(fila.find('td:eq(0)').text()); //capturo el ID
 		var opcion = 2 ; // BUSCAR X ID		
-	    $('#div_problema').html('<input type="hidden" name="problema" id="problema" />');
+ 	     $('#div_problema').html('<input type="hidden" name="problema" id="problema" />');
 		$.ajax({
 		     url: 'herramientas_controler.php', 
 			method:"POST",
@@ -71,6 +72,7 @@ $(document).ready(function(){
 				$('#idubicacion2').val(data.idubicacion2);
 				$('#idubicacion3').val(data.idubicacion3);
 				$('#cantidad').val(data.cantidad);
+				$('#problema').val( "" );		
 				$('#userModal').modal('show');	
 			}
 		})
@@ -83,7 +85,7 @@ $(document).ready(function(){
 		var opcion = 2 ; // BUSCAR X ID		
 	     $('#div_problema').html('<input type="hidden" name="problema" id="problema" />');
 		$.ajax({
-		     url: "herramientas_list.php", 
+		     url: "herramientas_controler.php", 
 			method:"POST",
 			data:{ id:id , opcion:opcion },
 			dataType:"json",
@@ -108,7 +110,7 @@ $(document).ready(function(){
 // GRABAR - TOMA LA OPCION DE LA VARIABLE OPERATION
 	$('#user_form').submit(function(e){            		
 		event.preventDefault();
-		alertify.success( 'GRABAR');
+		var opcion = $('#opcion').val();
 		var id = $('#id').val();
 		var name = $('#name').val();
 		var idcategoria = $('#idcategoria').val();
@@ -116,12 +118,12 @@ $(document).ready(function(){
 		var idubicacion2 = $('#idubicacion2').val();
 		var idubicacion3 = $('#idubicacion3').val();
 		var cantidad = $('#cantidad').val();
-		var opcion = $('#opcion').val();		
+		var problema = $('#problema').val();
 		$.ajax({
 			url: 'herramientas_controler.php',
 			type: 'post',
-			data: { opcion:opcion, id:id, name:name, idubicacion1:idubicacion1,
-				idubicacion2:idubicacion2, idubicacion3:idubicacion3, cantidad:cantidad },
+			data: { opcion:opcion, id:id, name:name, idcategoria:idcategoria, idubicacion1:idubicacion1,
+				idubicacion2:idubicacion2, idubicacion3:idubicacion3, cantidad:cantidad, problema:problema },
 			dataType: 'json',
 			success: function(data) {
 				if ( data.success ) {				
@@ -129,7 +131,8 @@ $(document).ready(function(){
 				} else {
 					alertify.error(data.msj );					
 				}
-				$('#userModal').modal('hide');
+				$('#userModal').modal('hide');	
+				dataTable.ajax.reload();
 			},
 			error : function(jqXHR, exception, status ) {
 				  var msg = '';
@@ -148,7 +151,7 @@ $(document).ready(function(){
 				   } else {
 					  msg = 'Uncaught Error.\n' + jqXHR.responseText;
 				   }
-                                         console.log( "ERROR" );
+                    console.log( "ERROR" );
 				console.log( jqXHR );			
 				console.log( msg );
 				console.log( status ) ;
@@ -167,18 +170,16 @@ $(document).ready(function(){
 		var div = div + '</div>';
 		var div = div + '</div>';
 		$('#div_problema').html(div) ;
-	    $('#div_problema').html('<input type="hidden" name="problema" id="problema" />');
 		var fila = $(this).closest("tr");	        
 		var id = parseInt(fila.find('td:eq(0)').text()); //capturo el ID
 		var opcion = 2 ; // BUSCAR X ID		
 		$.ajax({
-		     url: "herramientas_list.php", 
+		     url: "herramientas_controler.php", 
 			method:"POST",
 			data:{ id:id , opcion:opcion },
 			dataType:"json",
 			success:function(data)
 			{
-				var opcion = 6 ;
 				$('#id').val(id);
 				$('#name').val(data.name);
 				$('#idcategoria').val(data.idcategoria);
@@ -189,12 +190,7 @@ $(document).ready(function(){
 				$('.modal-title').text("Reparacion");
 				$('#action').val("Actualizar");
 				$('#opcion').val("6");
-           
 			}
 		})
 	});
-	
-	
-	
-
 } );
