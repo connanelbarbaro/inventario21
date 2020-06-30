@@ -1,8 +1,6 @@
 <?php
 // Checkin What level user has permission to view this page
   require_once('includes/load.php');
-  _debug( "INIXIO" );
-
 ?>
 <?php include_once('layouts/header.php'); ?>
 		<div class="row">
@@ -17,6 +15,7 @@
 							</div>
 						</strong>
 					</div>
+
 					<div class="panel-body" >
 						<table class="table table-bordered table-striped table-hover" id="myTable">
 							<thead>
@@ -34,7 +33,8 @@
 	</div>
 </div>
 <?php include_once('herramientas_modal.php'); ?>
+<script src="js/herramientas.js"></script>
 </body>
 </html>
-<?php include_once('layouts/js.php'); ?>
-<script src="js/herramientas.js"></script>
+
+
