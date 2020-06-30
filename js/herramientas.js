@@ -1,5 +1,4 @@
 $(document).ready(function(){
-	
 // LISTAR OPCION = 1
 	var opcion = 1 ;	
 	var dataTable = $('#myTable').DataTable({
@@ -30,11 +29,14 @@ $(document).ready(function(){
 	    ]
 	
 	});
-
+	$('.carga').html('');	    
 
 // AGREGAR OPCION = 3
 	$('#btn_add').click(function(){
 		$("#user_form").trigger("reset");
+		$('.modal-title').text("Cargando");
+		$('#userModal').modal('show');	
+		
 		$('#div_problema').html('<input type="hidden" name="problema" id="problema" />');	    
 		$(".modal-header").css( "background-color", "#17a2b8");
 		$(".modal-header").css( "color", "white" );
@@ -43,12 +45,14 @@ $(document).ready(function(){
 		$('#opcion').val( 3 );	
 		$('#cantidad').val( 1 );
 		$('#problema').val( "" );		
-		$('#userModal').modal('show');	    
 	});
 
 
 // EDITAR OPCION = 5
 	$(document).on('click', '.btn_edit', function(){
+		$("#user_form").trigger("reset");
+		$('.modal-title').text("Cargando");
+		$('#userModal').modal('show');	
 		var fila = $(this).closest("tr");	        
 		var id = parseInt(fila.find('td:eq(0)').text()); //capturo el ID
 		var opcion = 2 ; // BUSCAR X ID		
@@ -60,7 +64,6 @@ $(document).ready(function(){
 			dataType:"json",
 			success:function(data)
 			{
-				$("#user_form").trigger("reset");
 				$(".modal-header").css( "background-color", "#17a2b8");
 				$(".modal-header").css( "color", "white" );
 				$(".modal-title").text("Actualizar Herramienta");
@@ -73,13 +76,16 @@ $(document).ready(function(){
 				$('#idubicacion3').val(data.idubicacion3);
 				$('#cantidad').val(data.cantidad);
 				$('#problema').val( "" );		
-				$('#userModal').modal('show');	
 			}
 		})
+		$('.cargando').html( '' );	    
 	});
 
 // BORRAR - OPCION 4
 	$(document).on('click', '.btn_del', function(){
+		$("#user_form").trigger("reset");
+		$('.modal-title').text("Cargando");
+		$('#userModal').modal('show');	
 		var fila = $(this).closest("tr");	        
 		var id = parseInt(fila.find('td:eq(0)').text()); //capturo el ID
 		var opcion = 2 ; // BUSCAR X ID		
@@ -98,7 +104,6 @@ $(document).ready(function(){
 				$('#idubicacion2').val(data.idubicacion2);
 				$('#idubicacion3').val(data.idubicacion3);
 				$('#cantidad').val(data.cantidad);
-				$('#userModal').modal('show');
 				$('.modal-title').text("Borrar");
 				$('#action').val("Confirmar");
 				$('#opcion').val( 4 );
@@ -133,36 +138,23 @@ $(document).ready(function(){
 				}
 				$('#userModal').modal('hide');	
 				dataTable.ajax.reload();
+				$('.cargando').html( '' );	    
 			},
 			error : function(jqXHR, exception, status ) {
-				  var msg = '';
-				   if (jqXHR.status === 0) {
-					  msg = 'Not connect.\n Verify Network.';
-				   } else if (jqXHR.status == 404) {
-					  msg = 'Requested page not found. [404]';
-				   } else if (jqXHR.status == 500) {
-					  msg = 'Internal Server Error [500].';
-				   } else if (exception === 'parsererror') {
-					  msg = 'Requested JSON parse failed.';
-				   } else if (exception === 'timeout') {
-					  msg = 'Time out error.';
-				   } else if (exception === 'abort') {
-					  msg = 'Ajax request aborted.';
-				   } else {
-					  msg = 'Uncaught Error.\n' + jqXHR.responseText;
-				   }
                     console.log( "ERROR" );
 				console.log( jqXHR );			
-				console.log( msg );
+				console.log( exception );
 				console.log( status ) ;
 				},
 		});
-
 	});
 	
 
 // REPARACION - OPCION 6	
 	$(document).on('click', '.btn_view', function(){
+		$("#user_form").trigger("reset");
+		$('.modal-title').text("Cargando");
+		$('#userModal').modal('show');	
 		var div = '<div class="form-group">' ;
 		var div = div + '<label for="problema">Problema</label>';
 		var div = div + '<div class="input-group">';
@@ -186,11 +178,11 @@ $(document).ready(function(){
 				$('#idubicacion1').val(data.idubicacion1);
 				$('#idubicacion2').val(data.idubicacion2);
 				$('#idubicacion3').val(data.idubicacion3);
-				$('#userModal').modal('show');
 				$('.modal-title').text("Reparacion");
 				$('#action').val("Actualizar");
 				$('#opcion').val("6");
 			}
 		})
 	});
+
 } );

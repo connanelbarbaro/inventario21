@@ -10,6 +10,7 @@ Function HerramientasListar()
 	$query .= "LEFT JOIN categorias c2 ON c2.id = h.idubicacion2 ";	
 	$query .= "LEFT JOIN categorias c3 ON c3.id = h.idubicacion3 ";
 	$query .= "LEFT JOIN categorias c4 ON c4.id = h.idcategoria ";	
+	$query .= "ORDER BY h.name";
 	return ErrorsqlPDO( $query );	
 }
 
@@ -23,7 +24,7 @@ Function HerramientasID ( $id )
 	$query .= " LEFT JOIN categorias c3 ON c3.id = h.idubicacion3 ";
 	$query .= " LEFT JOIN categorias c4 ON c4.id = h.idcategoria ";
 	$query .= " WHERE h.id = :id " ;
-	$query .= " ORDER BY h.name LIMIT 1";	
+	$query .= " LIMIT 1";	
 	return Errorsql( $query, array( ':id' => $id ) );	
 }
 
