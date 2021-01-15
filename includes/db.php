@@ -1,7 +1,7 @@
 <?php
 
-$username = 'root';
-$password = '1';
-$connection = new PDO( 'mysql:host=localhost;dbname=oswa_inv', $username, $password );
+$username = 'inventario';
+$password = 'inventario';
+$connection = new PDO( 'mysql:host=tecnica3sql.duckdns.org;dbname=panol', $username, $password );
 
 ?>
